@@ -1,0 +1,15 @@
+package cl.bolsillo.app;
+import org.json.*;import java.net.*;import java.util.regex.*;
+/** Public GitHub metadata only; never accepts arbitrary download hosts or unsigned version hints. */
+final class ReleaseFeed {
+ static final long MAX_APK=100L*1024*1024;
+ static final class Release {int code;String version,url,sha256,notes,page;long bytes;JSONObject json()throws Exception{return new JSONObject().put("code",code).put("version",version).put("url",url).put("sha256",sha256).put("notes",notes).put("page",page).put("bytes",bytes);} }
+ static boolean repository(String repo){return repo!=null&&repo.matches("[A-Za-z0-9][A-Za-z0-9-]{0,38}/[A-Za-z0-9_.-]{1,100}")&&!repo.contains("..");}
+ static boolean downloadHost(URL url){String host=url.getHost();return url.getProtocol().equals("https")&&url.getUserInfo()==null&&(url.getPort()==-1||url.getPort()==443)&&(host.equalsIgnoreCase("github.com")||host.equalsIgnoreCase("release-assets.githubusercontent.com")||host.equalsIgnoreCase("objects.githubusercontent.com")||host.equalsIgnoreCase("github-releases.githubusercontent.com"));}
+ static Release parse(String repo,JSONObject json)throws Exception{
+  Ledger.require(repository(repo),"Repositorio no configurado");Ledger.require(!json.optBoolean("draft")&&!json.optBoolean("prerelease"),"No hay una versión estable publicada");String tag=json.optString("tag_name");Matcher match=Pattern.compile("v([1-9][0-9]{0,8})(?:\\.[0-9]+){0,2}").matcher(tag);Ledger.require(match.matches(),"Versión de publicación no reconocida");int code=Integer.parseInt(match.group(1));String page=json.optString("html_url");Ledger.require(page.equals("https://github.com/"+repo+"/releases/tag/"+tag),"Publicación de otro repositorio");JSONArray assets=json.getJSONArray("assets");Release r=new Release();r.code=code;r.version=tag;r.page=page;r.notes=json.optString("body");if(r.notes.length()>6000)r.notes=r.notes.substring(0,6000);
+  String name="Bolsillo-"+code+".apk";for(int i=0;i<assets.length();i++){JSONObject a=assets.getJSONObject(i);if(!name.equals(a.optString("name")))continue;Ledger.require(r.url==null,"Publicación con APK duplicado");String url=a.optString("browser_download_url"),digest=a.optString("digest");Ledger.require(url.equals("https://github.com/"+repo+"/releases/download/"+tag+"/"+name)&&downloadHost(new URL(url)),"Dirección de descarga inesperada");Ledger.require(digest.matches("sha256:[0-9a-fA-F]{64}"),"La publicación aún no tiene una huella SHA-256 verificable");long bytes=a.optLong("size");Ledger.require(bytes>0&&bytes<=MAX_APK,"Tamaño de actualización no permitido");r.url=url;r.sha256=digest.substring(7).toLowerCase(java.util.Locale.ROOT);r.bytes=bytes;}
+  Ledger.require(r.url!=null,"Esta publicación no incluye el APK de Bolsillo");return r;
+ }
+ static Release cached(JSONObject json)throws Exception{Release r=new Release();r.code=json.getInt("code");r.version=json.getString("version");r.url=json.getString("url");r.sha256=json.getString("sha256");r.notes=json.optString("notes");r.page=json.getString("page");r.bytes=json.getLong("bytes");return r;}
+}

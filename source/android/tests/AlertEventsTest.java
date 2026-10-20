@@ -1,0 +1,24 @@
+package cl.bolsillo.app;
+import org.json.*;import java.util.*;
+/** Financial change descriptions and signatures are pure and leave saved money untouched. */
+public final class AlertEventsTest {
+ static int checks;
+ static void yes(boolean value,String message){checks++;if(!value)throw new AssertionError(message);}
+ static JSONObject copy(JSONObject d)throws Exception{return new JSONObject(d.toString());}
+ static JSONObject expense(long amount)throws Exception{return NativeSync.transaction("expense",amount,"bank-mach","","expense-0","Comercio de prueba","manual","").put("id","test-alert-tx");}
+ public static void main(String[] args)throws Exception{
+  JSONObject before=Ledger.initial(),after=copy(before);String original=before.toString();yes(AlertEvents.changes(before,after).isEmpty(),"no change has no alert");
+  after.getJSONArray("transactions").put(expense(12345));String committed=after.toString();List<JSONObject> created=AlertEvents.changes(before,after);yes(created.size()==1,"one transaction is one change");yes(created.get(0).optString("txId").equals("test-alert-tx"),"transaction deep link");yes(created.get(0).optString("body").contains("12345")||created.get(0).optString("body").contains("12.345"),"complete CLP amount");yes(created.get(0).optString("body").contains("Saldo registrado"),"describes recorded local balance");yes(!created.get(0).optString("hiddenBody").matches(".*[0-9$].*"),"private body has no amounts");yes(before.toString().equals(original)&&after.toString().equals(committed),"alert diff leaves both ledgers unchanged");
+  JSONObject edited=copy(after);edited.getJSONArray("transactions").getJSONObject(0).put("amount",22222);List<JSONObject> changes=AlertEvents.changes(after,edited);yes(changes.size()==1&&changes.get(0).optLong("beforeAmount")==12345,"amount update retains previous amount");yes(!AlertEvents.signature("transactions",after.getJSONArray("transactions").getJSONObject(0)).equals(AlertEvents.signature("transactions",edited.getJSONArray("transactions").getJSONObject(0))),"amount signature differs");
+  JSONObject note=copy(after);note.getJSONArray("transactions").getJSONObject(0).put("note","Otro nombre").put("tags","otra etiqueta");yes(AlertEvents.changes(after,note).isEmpty(),"notes and tags do not produce amount notices");
+  JSONObject pending=copy(after);pending.getJSONArray("transactions").getJSONObject(0).put("status","pending");yes(AlertEvents.changes(after,pending).get(0).optString("body").contains("sin modificar el saldo"),"pending explains unchanged balance");
+  JSONObject future=copy(after);future.getJSONArray("transactions").getJSONObject(0).put("date","2099-01-01");yes(AlertEvents.changes(after,future).get(0).optString("body").contains("Fecha futura"),"future movement is explicit");
+  JSONObject remove=copy(after);remove.getJSONArray("transactions").remove(0);JSONObject removal=AlertEvents.changes(after,remove).get(0);yes(removal.optBoolean("deleted")&&!removal.has("txId"),"deleted movement has no invalid deep link");
+  JSONObject opening=copy(before);Ledger.find(opening.getJSONArray("accounts"),"bank-mach").put("opening",900000000000L);List<JSONObject> balance=AlertEvents.changes(before,opening);yes(balance.size()==1&&balance.get(0).optLong("amount")==900000000000L,"large balance without truncation");
+  JSONObject setup=copy(before);setup.getJSONArray("accounts").put(Ledger.account("new-empty","Nueva","cash","other"));yes(AlertEvents.changes(before,setup).isEmpty(),"empty account setup is quiet");
+  JSONObject categories=copy(before);categories.getJSONArray("categories").getJSONObject(0).put("name","Almuerzos");yes(AlertEvents.changes(before,categories).isEmpty(),"category naming is quiet");
+  JSONObject debt=copy(before);debt.getJSONArray("people").put(new JSONObject().put("id","friend").put("name","Amigo"));debt.getJSONArray("receivables").put(new JSONObject().put("id","prior").put("personId","friend").put("name","Amigo").put("amount",100000).put("settled",0).put("loan",true).put("date",Ledger.today()).put("note","Deuda previa"));JSONObject abono=copy(debt);abono.getJSONArray("receivables").getJSONObject(0).put("settled",20000);JSONObject paid=AlertEvents.changes(debt,abono).get(0);yes(paid.optLong("amount")==80000&&paid.optString("title").equals("Deuda actualizada"),"partial settlement describes remaining debt");yes(Ledger.balances(abono,Ledger.today()).get("bank-mach")==0,"prior debt notifications do not move bank money");
+  JSONObject legacy=copy(debt);legacy.getJSONArray("receivables").getJSONObject(0).remove("settled");JSONObject repaired=copy(legacy);Finance.migrate(repaired);yes(AlertEvents.changes(legacy,repaired).isEmpty(),"missing legacy settlement repaired to zero without false money notice");
+  System.out.println("PASS: "+checks+" local alert diff, privacy, accounting and signature checks");
+ }
+}

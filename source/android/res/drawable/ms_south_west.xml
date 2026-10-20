@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Google Material Symbols Rounded: symbols/web/south_west/materialsymbolsrounded/south_west_24px.svg. Apache-2.0. Original paths unchanged; converted SVG to Android VectorDrawable and neutral tint. Source commit 737e3324305806514d7909874fa1818ae1808232. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="960" android:viewportHeight="960">
+  <group android:translateX="0" android:translateY="960">
+    <path android:fillColor="#FFFFFFFF" android:fillType="nonZero" android:pathData="M240-200q-17 0-28.5-11.5T200-240v-320q0-17 11.5-28.5T240-600q17 0 28.5 11.5T280-560v224l436-436q11-11 28-11t28 11q11 11 11 28t-11 28L336-280h224q17 0 28.5 11.5T600-240q0 17-11.5 28.5T560-200H240Z" />
+  </group>
+</vector>

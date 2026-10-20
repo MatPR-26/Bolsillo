@@ -1,0 +1,29 @@
+package cl.bolsillo.app;
+import android.content.Context;import android.graphics.*;import android.graphics.drawable.Drawable;import android.os.*;import android.view.*;import android.widget.*;
+/** Small live backdrop; coalesces changes and stays idle when content is still. */
+final class FrostedDock extends FrameLayout {
+ final View source;final ImageView frost;final Drawable backdrop;final DockLens lens;final Handler handler=new Handler(Looper.getMainLooper());boolean pending,forceSoftware,gpuDirty=true;int gpuRecords;Bitmap pixels;ViewTreeObserver observed;int lastY=Integer.MIN_VALUE,lastX,lastHeight;float lastTranslation;long lastCapture;int captures;final int[] here=new int[2],there=new int[2];final ViewTreeObserver.OnScrollChangedListener scrolled=this::schedule;final Runnable refresh=()->capture();
+ final ViewTreeObserver.OnPreDrawListener live=this::beforeDraw;
+ boolean beforeDraw(){float translation=source instanceof ViewGroup&&((ViewGroup)source).getChildCount()>0?((ViewGroup)source).getChildAt(0).getTranslationX():0;if(source.getScrollY()!=lastY||source.getScrollX()!=lastX||source.getHeight()!=lastHeight||translation+source.getTranslationX()!=lastTranslation){lastY=source.getScrollY();lastX=source.getScrollX();lastHeight=source.getHeight();lastTranslation=translation+source.getTranslationX();schedule();}return true;}
+ FrostedDock(Context c,View source,View controls){super(c);this.source=source;backdrop=Glass.backdrop(c);lens=new DockLens(c);setClipToOutline(true);setBackground(Glass.material(c,170,30,Glass.secondary(c)));frost=new Backdrop(c);frost.setScaleType(ImageView.ScaleType.FIT_XY);addView(frost,new FrameLayout.LayoutParams(-1,-1));View rim=new View(c);rim.setBackground(Glass.material(c,195,30,Glass.secondary(c)));addView(rim,new FrameLayout.LayoutParams(-1,-1));addView(controls,new FrameLayout.LayoutParams(-1,-2,Gravity.CENTER));setElevation(Glass.dp(c,3));}
+ @Override protected void onMeasure(int widthSpec,int heightSpec){int w=MeasureSpec.getSize(widthSpec);View controls=getChildAt(2);controls.measure(MeasureSpec.makeMeasureSpec(w,MeasureSpec.EXACTLY),heightSpec);int h=controls.getMeasuredHeight();setMeasuredDimension(w,h);frost.measure(MeasureSpec.makeMeasureSpec(w,MeasureSpec.EXACTLY),MeasureSpec.makeMeasureSpec(h,MeasureSpec.EXACTLY));getChildAt(1).measure(MeasureSpec.makeMeasureSpec(w,MeasureSpec.EXACTLY),MeasureSpec.makeMeasureSpec(h,MeasureSpec.EXACTLY));}
+ @Override protected void onSizeChanged(int w,int h,int oldw,int oldh){super.onSizeChanged(w,h,oldw,oldh);schedule();}
+ boolean nativeGlass(){return Build.VERSION.SDK_INT>=31&&isHardwareAccelerated()&&!forceSoftware;}
+ void schedule(){if(nativeGlass()){gpuDirty=true;frost.postInvalidateOnAnimation();return;}if(!pending&&isAttachedToWindow()&&Glass.intensity(getContext())>0){pending=true;handler.postDelayed(refresh,Math.max(0,40-(SystemClock.uptimeMillis()-lastCapture)));}}
+ void capture(){pending=false;if(nativeGlass()){gpuDirty=true;frost.invalidate();return;}if(!isAttachedToWindow()||getWidth()==0||getHeight()==0)return;if(PageMotion.running(source)){pending=true;handler.postDelayed(refresh,40);return;}lastCapture=SystemClock.uptimeMillis();int w=Math.max(1,getWidth()/5),h=Math.max(1,getHeight()/5);if(pixels==null||pixels.getWidth()!=w||pixels.getHeight()!=h)pixels=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);pixels.eraseColor(Glass.panel(getContext()));Canvas c=new Canvas(pixels);float scale=(float)w/getWidth();c.scale(scale,scale);getLocationInWindow(here);source.getLocationInWindow(there);c.translate(-(here[0]-there[0]),-(here[1]-there[1]));backdrop.setBounds(0,0,source.getWidth(),source.getHeight());backdrop.draw(c);c.translate(-source.getScrollX(),-source.getScrollY());source.draw(c);frost.setImageBitmap(lens.render(pixels));frost.invalidate();captures++;}
+ @Override protected void onAttachedToWindow(){super.onAttachedToWindow();observed=getViewTreeObserver();observed.addOnScrollChangedListener(scrolled);observed.addOnPreDrawListener(live);post(this::schedule);}
+ @Override protected void onDetachedFromWindow(){handler.removeCallbacks(refresh);pending=false;ViewTreeObserver tree=observed!=null&&observed.isAlive()?observed:getViewTreeObserver();if(tree.isAlive()){tree.removeOnScrollChangedListener(scrolled);tree.removeOnPreDrawListener(live);}observed=null;frost.setImageDrawable(null);lens.release();if(frost instanceof Backdrop)((Backdrop)frost).release();pixels=null;super.onDetachedFromWindow();}
+ /** On Android 12+ the backdrop is replayed and blurred on the GPU, without bitmap readback. */
+ final class Backdrop extends ImageView {
+  Gpu renderer;
+  Backdrop(Context c){super(c);}
+  @Override protected void onDraw(Canvas canvas){if(nativeGlass()&&canvas.isHardwareAccelerated()){if(renderer==null)renderer=new Gpu();renderer.draw(canvas);}else super.onDraw(canvas);}
+  void release(){if(renderer!=null){renderer.node.discardDisplayList();renderer=null;}}
+ }
+ final class Gpu {
+  final RenderNode node=new RenderNode("Bolsillo dock backdrop");
+  Gpu(){float blur=Glass.dp(getContext(),Glass.intensity(getContext())==2?10:7);node.setRenderEffect(RenderEffect.createBlurEffect(blur,blur,Shader.TileMode.CLAMP));}
+  void draw(Canvas canvas){if(getWidth()==0||getHeight()==0||Glass.intensity(getContext())==0)return;if(gpuDirty||!node.hasDisplayList()){gpuDirty=false;node.setPosition(0,0,getWidth(),getHeight());RecordingCanvas recording=node.beginRecording(getWidth(),getHeight());try{getLocationInWindow(here);source.getLocationInWindow(there);recording.translate(-(here[0]-there[0]),-(here[1]-there[1]));backdrop.setBounds(0,0,source.getWidth(),source.getHeight());backdrop.draw(recording);recording.translate(-source.getScrollX(),-source.getScrollY());source.draw(recording);}finally{node.endRecording();}gpuRecords++;captures++;}canvas.drawRenderNode(node);}
+ }
+
+}

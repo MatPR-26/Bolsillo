@@ -1,0 +1,156 @@
+[
+  {
+    "bank": "chile",
+    "source": "https://apps.apple.com/cl/app/mi-banco-chile/id1516872542?uo=4",
+    "publisher": "Banco de Chile",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/f3/0f/f9f30fd2-edf0-85b0-dbea-3f71aa41910f/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_chile.jpg",
+    "sha256": "62b26f7f75d508f17205dd2db0b975a38d8df4f6df946b228015316823cce2ef",
+    "bytes": 19792,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "santander",
+    "source": "https://apps.apple.com/cl/app/santander-chile/id604982236?uo=4",
+    "publisher": "Banco Santander Chile S.A.",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d9/f5/53/d9f553d9-0ae1-e52b-bcf8-9d8b4da3cb07/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_santander.jpg",
+    "sha256": "f9e64d2febf106bf76d93bbbebea91d7e6a99ea938826bc012d37f2b9af9201f",
+    "bytes": 56032,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "bci",
+    "source": "https://apps.apple.com/cl/app/bci/id1207892426?uo=4",
+    "publisher": "Banco de Credito e Inversiones",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/53/dc/ef/53dcefb9-03a3-e691-2e4c-b9c8bdce2776/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_bci.jpg",
+    "sha256": "a5513f93b885205e8b857c915b3be491402c42f66baabd31984255707e1fcdb7",
+    "bytes": 22284,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "itau",
+    "source": "https://apps.apple.com/cl/app/ita%C3%BA-chile/id636150714?uo=4",
+    "publisher": "Banco Itau Chile",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/fd/f3/14/fdf31442-6fc5-51eb-29b3-9e75458b7246/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_itau.jpg",
+    "sha256": "86cf9c05c2c5eb01872477a491d32a858287a1051f3af75ec4762e8ca9b66d11",
+    "bytes": 22810,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "security",
+    "source": "https://apps.apple.com/cl/app/banco-security/id6473542745?uo=4",
+    "publisher": "Banco Security",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/71/19/4f/71194fff-8da0-8c99-7284-084defbe59aa/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_security.jpg",
+    "sha256": "683d38218559ea1577ace16b52b4870223104f6651575d2c2684285c3aeefda9",
+    "bytes": 19720,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "coopeuch",
+    "source": "https://apps.apple.com/cl/app/appcoopeuch/id1520619303?uo=4",
+    "publisher": "Cooperativa del Personal de la Universidad de Chile Limitada",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/9e/1f/73/9e1f7317-5652-a2f7-2ed5-f1ee0c85c095/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_coopeuch.jpg",
+    "sha256": "575a8356236ecc0918af9d17f01998af75d8a86acd06814ef3f4d235953aa431",
+    "bytes": 20782,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "bice",
+    "source": "https://apps.apple.com/cl/app/bice/id1562225088?uo=4",
+    "publisher": "BANCO BICE",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/47/00/f3/4700f310-6636-3d9a-cd67-f50dfa0d81d7/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_bice.jpg",
+    "sha256": "26c0fd1a49d7728ab4d2b5d8fcda062ae88c0bedb4bae701f6b08cc98a311908",
+    "bytes": 18318,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "internacional",
+    "source": "https://apps.apple.com/cl/app/internacional-cl/id6447382468?uo=4",
+    "publisher": "Banco Internacional",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b4/35/49/b43549dd-9c1b-6471-37a8-edea7cd546be/AppIcon-0-0-1x_U007ephone-0-1-sRGB-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_internacional.jpg",
+    "sha256": "eeccba3ac0b9668e0133458810cd01b956e2889dd705430fa372a8ff565f1a9e",
+    "bytes": 17911,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "scotiabank",
+    "source": "https://www.scotiabankchile.cl/",
+    "publisher": "scotiabank",
+    "url": "https://cdn.aglty.io/scotiabank-chile/icons/favicons/icon-iphone4.png",
+    "file": "res/drawable-nodpi/brand_scotiabank.png",
+    "sha256": "c7587859bf404d7d54b7263ce551a4ee7a211dc5e85745f0277c47e1faeaff52",
+    "bytes": 1784,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "falabella",
+    "source": "https://www.bancofalabella.cl/",
+    "publisher": "falabella",
+    "url": "https://www.bancofalabella.cl/icons/apple-touch-icon.png",
+    "file": "res/drawable-nodpi/brand_falabella.png",
+    "sha256": "9dc458ea98c8b4da105496efb27e72e816eecb50d92d80f04f92ca212df562fa",
+    "bytes": 6089,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "consorcio",
+    "source": "https://www.bancoconsorcio.cl/",
+    "publisher": "consorcio",
+    "url": "https://consorcio.cdn.modyo.com/uploads/37051d90-b1f7-4a88-a1fe-2740d1471320/C144x144/apple-touch-icon.png",
+    "file": "res/drawable-nodpi/brand_consorcio.png",
+    "sha256": "8c06903185016acff732ddcedb2b71f95a045ea2a42287d5bd6c588d4bb07c02",
+    "bytes": 4878,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "ripley",
+    "source": "https://www.bancoripley.cl/",
+    "publisher": "ripley",
+    "url": "https://www.bancoripley.cl/assets/icons/favicon-96x96.png",
+    "file": "res/drawable-nodpi/brand_ripley.png",
+    "sha256": "ec85bf0020a118e1020b4f78ee5fb64e31ea0c965089dac5a410abab515663a0",
+    "bytes": 1187,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "tenpo",
+    "source": "https://www.tenpo.cl/",
+    "publisher": "tenpo",
+    "url": "https://cdn.prod.website-files.com/647f4d1c528358bdb9d8ef3e/696fd2d85f1cc2268a4d1184_icono2%20(1).png",
+    "file": "res/drawable-nodpi/brand_tenpo.png",
+    "sha256": "a1f1aa1eda50b4869033689c5a2ff497c2be0ee11cd9d43bb149fa412796622b",
+    "bytes": 9412,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "mercadopago",
+    "source": "https://apps.apple.com/cl/app/mercado-pago-cuenta-digital/id925436649?uo=4",
+    "publisher": "MercadoLibre S.A.",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3b/79/db/3b79dbfa-9d86-b868-5979-cf3da6b57216/App_Icon-0-0-1x_U007ephone-0-1-0-0-sRGB-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_mercadopago.jpg",
+    "sha256": "eda7f8ef9d88def2e7fafbe19ae869d05dfe65c4da583e1d5b2bec68616c02f0",
+    "bytes": 47423,
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  }
+]

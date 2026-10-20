@@ -1,0 +1,11 @@
+Google Material Symbols Rounded
+Author / upstream: Google, https://github.com/google/material-design-icons
+License: Apache License 2.0. Full source license: MaterialSymbols-Apache-2.0.txt.
+The APK packages the same full license in res/raw/material_symbols_license.txt.
+Upstream source commit: 737e3324305806514d7909874fa1818ae1808232
+The original 24px Rounded SVG outlines were converted to Android VectorDrawable XML.
+Original path data and proportions are unchanged. Their source viewBox origin is
+preserved with a vector group translation. A neutral fill is tinted at runtime.
+These assets are packaged locally; there is no icon font, network request or SVG
+runtime dependency. Bank, Netflix and Spotify logos are separate existing assets.
+Detailed source URLs and SHA-256 hashes: MaterialSymbols-sources.json.
