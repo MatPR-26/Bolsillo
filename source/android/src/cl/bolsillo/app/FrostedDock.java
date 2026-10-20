@@ -24,7 +24,7 @@ final class FrostedDock extends FrameLayout {
  final class Gpu {
   final RenderNode node=new RenderNode("Bolsillo dock backdrop");
   Gpu(){float blur=Glass.dp(getContext(),Glass.intensity(getContext())==2?10:7);node.setRenderEffect(RenderEffect.createBlurEffect(blur,blur,Shader.TileMode.CLAMP));}
-  void draw(Canvas canvas){if(getWidth()==0||getHeight()==0||Glass.intensity(getContext())==0)return;if(gpuDirty||!node.hasDisplayList()){gpuDirty=false;node.setPosition(0,0,getWidth(),getHeight());RecordingCanvas recording=node.beginRecording(getWidth(),getHeight());try{getLocationInWindow(here);source.getLocationInWindow(there);recording.translate(-(here[0]-there[0]),-(here[1]-there[1]));backdrop.setBounds(0,0,source.getWidth(),source.getHeight());backdrop.draw(recording);recording.translate(-source.getScrollX(),-source.getScrollY());source.draw(recording);}finally{node.endRecording();}gpuRecords++;captures++;}canvas.drawRenderNode(node);}
+  void draw(Canvas canvas){if(getWidth()==0||getHeight()==0||Glass.intensity(getContext())==0)return;if(gpuDirty||!node.hasDisplayList()){gpuDirty=false;node.setPosition(0,0,getWidth(),getHeight());RecordingCanvas recording=node.beginRecording(getWidth(),getHeight());try{recording.clipRect(0,0,getWidth(),getHeight());getLocationInWindow(here);source.getLocationInWindow(there);recording.translate(-(here[0]-there[0]),-(here[1]-there[1]));backdrop.setBounds(0,0,source.getWidth(),source.getHeight());backdrop.draw(recording);recording.translate(-source.getScrollX(),-source.getScrollY());source.draw(recording);}finally{node.endRecording();}gpuRecords++;captures++;}canvas.drawRenderNode(node);}
  }
 
 }
