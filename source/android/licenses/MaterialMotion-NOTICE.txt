@@ -1,0 +1,16 @@
+Material Components for Android — adapted motion factories
+Copyright 2019–2020 The Android Open Source Project
+License: Apache License 2.0 (full text: MaterialSymbols-Apache-2.0.txt).
+
+Sources consulted 2026-10-20:
+https://github.com/material-components/material-components-android/blob/master/lib/java/com/google/android/material/transition/ScaleProvider.java
+https://github.com/material-components/material-components-android/blob/master/lib/java/com/google/android/material/transition/platform/FadeThroughProvider.java
+https://github.com/material-components/material-components-android/blob/master/lib/java/com/google/android/material/transition/platform/MaterialFadeThrough.java
+https://github.com/material-components/material-components-android/blob/master/docs/theming/Motion.md
+
+MaterialMotion.java adapts the createScaleAnimator and createFadeThroughAnimator
+factories: original-scale restoration, property holders, fade-through progress
+threshold 0.35 and final-alpha restoration. Changes: framework-only types instead
+of AndroidX annotations, shorter scale/distance, centralized timing, deterministic
+cancellation, bounded page targets and pressed-state feedback. No affiliation
+with Google or endorsement by Material Design is claimed.

@@ -3,7 +3,8 @@ import java.text.Normalizer;import java.util.regex.*;
 /** Conservative CLP parser. Raw notification text is not persisted. */
 public final class BankNotificationParser {
  public static final class Candidate{public final long amount;public final String merchant,last4,type,reference,reason;public final boolean review;Candidate(long a,String m,String card){this(a,m,card,"expense",false);}Candidate(long a,String m,String card,String kind,boolean held){this(a,m,card,kind,held,"","");}Candidate(long a,String m,String card,String kind,boolean held,String ref,String why){amount=a;merchant=m;last4=card;type=kind;review=held;reference=ref;reason=why;}Candidate(Candidate p,boolean held,String why){this(p.amount,p.merchant,p.last4,p.type,held,p.reference,why.isEmpty()?p.reason:why);}}
- public static String normalize(String s){return Normalizer.normalize(s==null?"":s,Normalizer.Form.NFD).replaceAll("\\p{M}","").toLowerCase(java.util.Locale.ROOT).replaceAll("[^a-z0-9]+"," ").trim();}
+ private static final Pattern MARKS=Pattern.compile("\\p{M}"),NON_WORD=Pattern.compile("[^a-z0-9]+");
+ public static String normalize(String s){return NON_WORD.matcher(MARKS.matcher(Normalizer.normalize(s==null?"":s,Normalizer.Form.NFD)).replaceAll("").toLowerCase(java.util.Locale.ROOT)).replaceAll(" ").trim();}
  public static Candidate parse(String input){return parse(input,"",false);}
  public static Candidate parse(String input,String title,boolean wallet){return movement(input,title,wallet,false,"");}
  static boolean has(String text,String pattern){return Pattern.compile(pattern).matcher(text).find();}

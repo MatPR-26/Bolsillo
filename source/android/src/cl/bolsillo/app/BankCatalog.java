@@ -3,7 +3,10 @@ import org.json.*;import java.util.*;
 /** Optional account templates. Selecting a bank never connects to it or enables notification access. */
 final class BankCatalog {
  static final String[][] BANKS={{"bancoestado","BancoEstado","bancoestado|banco estado"},{"mach","MACHBANK","machbank|mach"},{"chile","Banco de Chile","banco de chile|bancochile|banco chile|bancochile.empresas"},{"santander","Santander","santander"},{"bci","Bci","bci|bancobci"},{"scotiabank","Scotiabank","scotiabank|scotia"},{"itau","Itaú","itau"},{"falabella","Banco Falabella","banco falabella|bancofalabella"},{"bice","BICE","bice"},{"consorcio","Banco Consorcio","banco consorcio|bancoconsorcio"},{"internacional","Banco Internacional","banco internacional|bancointernacional"},{"security","Banco Security","banco security|bancosecurity"},{"ripley","Banco Ripley","banco ripley|bancoripley"},{"tenpo","Tenpo","tenpo"},{"coopeuch","Coopeuch / Dale","coopeuch|dale coopeuch"},{"mercadopago","Mercado Pago","mercado pago|mercadopago"}};
- static String detect(String value){String text=" "+BankNotificationParser.normalize(value).replaceAll("[^a-z0-9]+"," ")+" ";for(String[] bank:BANKS)for(String alias:bank[2].split("\\|")){String normalized=BankNotificationParser.normalize(alias).replaceAll("[^a-z0-9]+"," ");if(text.contains(" "+normalized+" "))return bank[0];}return "";}
+ private static final Map<String,String> ALIASES=new LinkedHashMap<>();
+ static {for(String[] bank:BANKS)for(String alias:bank[2].split("\\|"))ALIASES.put(" "+BankNotificationParser.normalize(alias)+" ",bank[0]);}
+ static String detect(String value){return detectNormalized(BankNotificationParser.normalize(value));}
+ static String detectNormalized(String normalized){String text=" "+normalized+" ";for(Map.Entry<String,String> alias:ALIASES.entrySet())if(text.contains(alias.getKey()))return alias.getValue();return "";}
  static boolean known(String id){for(String[] bank:BANKS)if(bank[0].equals(id))return true;return false;}
  static List<String> ids(){List<String> result=new ArrayList<>();for(String[] bank:BANKS)result.add(bank[0]);result.add("other");return result;}
  static List<String> names(){List<String> result=new ArrayList<>();for(String[] bank:BANKS)result.add(bank[1]);result.add("Otra institución");return result;}
