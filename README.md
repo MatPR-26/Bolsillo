@@ -38,12 +38,12 @@ Una plantilla bancaria no garantiza que todos sus formatos de notificación sean
 
 En **Ajustes → Actualizaciones** puedes comprobar manualmente o descargar una versión nueva. La app comprueba versiones al abrirla, como máximo una vez al día tras una consulta correcta; un punto naranja indica que existe una actualización. El APK se descarga solo cuando lo pides, se verifica y **Android te pide confirmar su instalación**. Se conserva el paquete y la firma para mantener tus registros.
 
-La versión 15 es la primera con actualizador: las versiones anteriores necesitan instalar este APK una vez. Cambiar archivos del repositorio no distribuye una app nueva: el mantenedor debe publicar su APK firmado en Releases.
+El actualizador está disponible desde la versión 15. Para actualizar una versión anterior, descarga el APK de la última publicación e instálalo encima de la app existente.
 
 ## Desarrollo
 
 Java nativo y Android Views; SDK mínimo 26, target 36. Sin WebView, servidor propio, publicidad ni analítica. El permiso de Internet se utiliza para consultar GitHub y descargar el APK solicitado. Los datos financieros no se envían allí.
 
-Las instrucciones de compilación, pruebas y publicación están en [docs/MAINTAINER.md](docs/MAINTAINER.md). Las pruebas usan datos ficticios y un emulador dedicado. La clave privada de firma no está en este repositorio ni en las releases.
+Las guías para contribuir, compilar y publicar están en [docs/MAINTAINER.md](docs/MAINTAINER.md). La documentación técnica de navegación y animaciones está en [docs/RENDIMIENTO.md](docs/RENDIMIENTO.md).
 
 Los recursos de terceros conservan sus licencias y atribuciones en [source/android/licenses](source/android/licenses). Las marcas de instituciones y servicios pertenecen a sus titulares y se usan para identificación. No se otorga una licencia general sobre esas marcas.

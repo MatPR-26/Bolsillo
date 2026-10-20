@@ -14,11 +14,11 @@ La actualización 16 adapta las fábricas `ScaleProvider` y `FadeThroughProvider
 
 ## Medición reproducible
 
-La fase instrumentada `perf` usa 1.800 movimientos y 1.800 entradas de historial ficticios. Mide lecturas y tiempo de ejecución de navegación en el hilo principal, además de `FrameMetrics`. Restaura el estado cifrado y preferencias al terminar. No mide un Samsung real ni garantiza una frecuencia concreta de fotogramas.
+La fase instrumentada `perf` usa 1.800 movimientos y 1.800 entradas de historial ficticios. Mide lecturas y tiempo de ejecución de navegación en el hilo principal, además de `FrameMetrics`. Restaura el estado cifrado y preferencias al terminar. Estas mediciones de laboratorio no representan el rendimiento de todos los dispositivos.
 
 La versión 15 tardó entre 412 y 652 ms en preparar los cambios de sección, y entre 416 y 477 ms en leer el registro de esa prueba. En la versión final 16, las mismas rutas tardaron entre 2 y 63 ms en prepararse, y las lecturas entre 24 y 31 ms. El tiempo de preparación de una página y la duración de un fotograma son métricas distintas.
 
-Los tiempos gráficos del emulador variaron mucho durante la sesión. En la comprobación final, la mediana de `TOTAL_DURATION` rondó los 90 ms. Al repetirla ocultando solo el desenfoque del dock, se mantuvo cerca de 90 ms; los componentes de animación y dibujo del hilo principal rondaron 0,2 ms cada uno. Esto no permite prometer una mejora de FPS ni extrapolar el rendimiento al Samsung. La fase `perf_no_blur` existe solo para diagnóstico y restaura sus cambios al terminar; el APK conserva el cristal.
+Los tiempos gráficos del emulador variaron entre ejecuciones. En una comprobación, la mediana de `TOTAL_DURATION` rondó los 90 ms. Al repetirla ocultando solo el desenfoque del dock, se mantuvo cerca de 90 ms; los componentes de animación y dibujo del hilo principal rondaron 0,2 ms cada uno. Por esta variación, no se atribuye una mejora cuantificada de FPS ni se extrapolan estos resultados a otros dispositivos. La fase `perf_no_blur` existe solo para diagnóstico y restaura sus cambios al terminar; el APK conserva el cristal.
 
 Los controles conservan los ajustes de animación de Android. Se usan `ScrollView`, `HorizontalScrollView` y `ListView` nativos; no se fuerza una frecuencia de pantalla permanente ni se cambian ajustes de batería del teléfono.
 
