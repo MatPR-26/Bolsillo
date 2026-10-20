@@ -7,3 +7,4 @@ Los logotipos se incluyen localmente para identificar las cuentas y servicios pe
 - Netflix y Spotify: trazados SVG ya incluidos en el código fuente original del usuario, convertidos a VectorDrawable Android.
 - Iconos de navegación y controles: Material Symbols Rounded oficiales de Google bajo Apache 2.0; fuentes y licencias en `licenses/`. El icono de lanzamiento de Bolsillo es un recurso propio del proyecto.
 - Selector de aplicaciones: iconos que proporciona Android para cada aplicación instalada.
+- Catálogo de 16 instituciones: los archivos originales y sus procedencias, editor y SHA-256 se detallan en `licenses/BankImages-sources.json` y `licenses/BankImages-NOTICE.txt`. Se incluyen para identificar las cuentas, sin modificar las imágenes ni atribuir afiliación.
