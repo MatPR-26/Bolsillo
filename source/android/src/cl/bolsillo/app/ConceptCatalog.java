@@ -7,8 +7,8 @@ import java.util.*;
 /** Read-only views over transactions: historical records and balances stay untouched. */
 final class ConceptCatalog {
  static String normalize(String raw){String n=Normalizer.normalize(raw==null?"":raw,Normalizer.Form.NFD).replaceAll("\\p{M}+","").toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+"," ").trim();return n.replaceAll(" +"," ");}
- static String concept(String raw){String n=normalize(raw);if(n.contains("netflix"))return "netflix";if(n.contains("spotify"))return "spotify";return n;}
- static String label(String raw){String k=concept(raw);if(k.equals("netflix"))return "Netflix";if(k.equals("spotify"))return "Spotify";return raw==null?"":raw.trim();}
+ static String concept(String raw){ServiceCatalog.Entry service=ServiceCatalog.identify(raw);return service==null?normalize(raw):service.id;}
+ static String label(String raw){ServiceCatalog.Entry service=ServiceCatalog.identify(raw);return service==null?(raw==null?"":raw.trim()):service.name;}
  static boolean generic(String normalized){return normalized.isEmpty()||Arrays.asList("gasto","ingreso","compra detectada","ingreso detectado","compra","transferencia","transferencia recibida","abono recibido","gasto dictado","ingreso dictado").contains(normalized);}
  static String key(JSONObject t){String type=t.optString("type"),raw=t.optString("note");String k=concept(raw);if(!type.equals("expense")&&!type.equals("income")||generic(k))return type+"#"+t.optString("id");return type+":"+k;}
  static final class Group {final String key,type;String label,lastDate,category;long total;final List<JSONObject> items=new ArrayList<>();Group(String key,JSONObject t){this.key=key;type=t.optString("type");label=label(t.optString("note"));lastDate=t.optString("date");category=t.optString("category");}int count(){return items.size();}}

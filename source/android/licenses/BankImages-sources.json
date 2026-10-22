@@ -152,5 +152,17 @@
     "bytes": 47423,
     "modified": false,
     "purpose": "Identify a user-selected institution. No affiliation or endorsement."
+  },
+  {
+    "bank": "mach",
+    "source": "https://apps.apple.com/cl/app/machbank-banca-digital/id1262116570?uo=4",
+    "publisher": "Banco de Credito e Inversiones",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b0/51/e7/b051e777-59a6-34bd-38a9-dc3c108c38d0/AppIcon-0-0-1x_U007ephone-0-11-0-85-220.png/512x512bb.jpg",
+    "file": "res/drawable-nodpi/brand_mach.jpg",
+    "sha256": "67b0035f2eff667c1006cec61d6f1b477a6c37bbed83f1bc8a360033a329bd7a",
+    "bytes": 24822,
+    "dimensions": "512x512",
+    "modified": false,
+    "purpose": "Identify a user-selected institution. No affiliation or endorsement."
   }
 ]

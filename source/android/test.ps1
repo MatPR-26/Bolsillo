@@ -1,6 +1,6 @@
-param([string]$Jdk="$PSScriptRoot/../../.tools/jdk/jdk-17.0.20.1+1",[string]$Sdk="$PSScriptRoot/../../.tools/sdk")
+param([string]$Jdk="$PSScriptRoot/../../.tools/jdk/jdk-17.0.20.1+1",[string]$Sdk="$PSScriptRoot/../../.tools/sdk",[string]$Out="$PSScriptRoot/../../dist")
 $ErrorActionPreference='Stop'
-$out=[IO.Path]::GetFullPath("$PSScriptRoot/../../dist")
+$out=[IO.Path]::GetFullPath($Out)
 $json=[IO.Path]::GetFullPath("$PSScriptRoot/../../.tools/json.jar")
 if (!(Test-Path -LiteralPath $json)) {
  New-Item -ItemType Directory -Force (Split-Path $json) | Out-Null
@@ -9,7 +9,7 @@ if (!(Test-Path -LiteralPath $json)) {
 if ((Get-FileHash -LiteralPath $json -Algorithm SHA256).Hash.ToLowerInvariant() -ne '3cf6cd6892e32e2b4c1c39e0f52f5248a2f5b37646fdfbb79a66b46b618414ed') { throw 'La huella de la dependencia de pruebas no coincide' }
 New-Item -ItemType Directory -Force "$out/test-classes" | Out-Null
 $cp="$json;$out/test-classes;$out/production-classes;$Sdk/platforms/android-36/android.jar"
-& "$Jdk/bin/javac.exe" -encoding UTF-8 -cp $cp -d "$out/test-classes" "$PSScriptRoot/tests/ParserTest.java" "$PSScriptRoot/tests/LedgerTest.java" "$PSScriptRoot/tests/LearnedRulesTest.java" "$PSScriptRoot/tests/AlertEventsTest.java" "$PSScriptRoot/tests/CatalogChartsTest.java" "$PSScriptRoot/tests/PublicReleaseTest.java"
+& "$Jdk/bin/javac.exe" -encoding UTF-8 -cp $cp -d "$out/test-classes" "$PSScriptRoot/tests/ParserTest.java" "$PSScriptRoot/tests/LedgerTest.java" "$PSScriptRoot/tests/LearnedRulesTest.java" "$PSScriptRoot/tests/AlertEventsTest.java" "$PSScriptRoot/tests/CatalogChartsTest.java" "$PSScriptRoot/tests/PublicReleaseTest.java" "$PSScriptRoot/tests/ServiceCatalogTest.java" "$PSScriptRoot/tests/ChartUpgradeTest.java"
 if($LASTEXITCODE -ne 0){throw 'Test compilation failed'}
 & "$Jdk/bin/java.exe" -cp $cp ParserTest
 if($LASTEXITCODE -ne 0){throw 'Parser tests failed'}
@@ -28,3 +28,9 @@ if($LASTEXITCODE -ne 0){throw "Catalog/charts tests failed"}
 
 & "$Jdk/bin/java.exe" -cp $cp cl.bolsillo.app.PublicReleaseTest
 if($LASTEXITCODE -ne 0){throw "Public release and shared expense tests failed"}
+
+& "$Jdk/bin/java.exe" -cp $cp cl.bolsillo.app.ServiceCatalogTest
+if($LASTEXITCODE -ne 0){throw 'Service catalog and historical preservation tests failed'}
+
+& "$Jdk/bin/java.exe" -cp $cp cl.bolsillo.app.ChartUpgradeTest
+if($LASTEXITCODE -ne 0){throw "Chart periods, grouping and exact drilldown tests failed"}

@@ -7,7 +7,7 @@ final class UiSmoke {
  static void run(Instrumentation test,Context c)throws Exception{
   NativeSync.EXEC.submit(()->{}).get(10,java.util.concurrent.TimeUnit.SECONDS);
   java.util.Map<String,Object> encrypted=VisualChecks.preferences(c.getSharedPreferences("secure",0)),settings=VisualChecks.preferences(NativeStore.settings(c));JSONObject finance=LocalData.read(c);active.clear();
-  try{render(test,c);}finally{
+  try{LocalData.restore(c,VisualChecks.fixture());render(test,c);}finally{
    try{test.runOnMainSync(()->{for(MainActivity activity:active)activity.finish();});VisualChecks.settled(test);NativeSync.EXEC.submit(()->{}).get(10,java.util.concurrent.TimeUnit.SECONDS);}
    finally{try{VisualChecks.restore(c.getSharedPreferences("secure",0),encrypted);}finally{VisualChecks.restore(NativeStore.settings(c),settings);active.clear();}}
    if(!VisualChecks.preferences(c.getSharedPreferences("secure",0)).equals(encrypted)||!VisualChecks.preferences(NativeStore.settings(c)).equals(settings)||!LocalData.read(c).toString().equals(finance.toString()))throw new Exception("UI screenshots must restore all encrypted finance records and preferences exactly");

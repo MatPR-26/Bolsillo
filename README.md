@@ -4,6 +4,13 @@ Una app Android nativa para llevar tus cuentas, gastos, ahorro y dinero por cobr
 
 **[Descargar la última versión](https://github.com/MatPR-26/Bolsillo/releases/latest)** · [Privacidad](PRIVACY.md) · [Cambios](CHANGELOG.md) · [Compilar y publicar](docs/MAINTAINER.md)
 
+<p>
+ <img src="docs/images/cuentas-oscuro.png" width="240" alt="Cuentas con cristal y colores derivados de los bancos en modo oscuro">
+ <img src="docs/images/cuentas-claro.png" width="240" alt="Las mismas cuentas adaptadas al modo claro">
+</p>
+
+Capturas de la app con datos ficticios y una paleta personalizada.
+
 ## Lo esencial
 
 | Tu dinero | Menos trabajo manual |
@@ -18,13 +25,17 @@ Una app Android nativa para llevar tus cuentas, gastos, ahorro y dinero por cobr
 
 1. Instala el APK de Releases. Si ya usas una versión nativa anterior, instálalo encima: **no desinstales la app**, así conservarás el registro y la clave del teléfono.
 2. Elige tus bancos. Solo se crean las plantillas seleccionadas; puedes añadir más desde **Cuentas → Añadir bancos**. No se conecta a un banco: ajusta el saldo inicial de tus cuentas.
-3. Abre **Explorar → Dinero → Automatización**. El tutorial destaca qué configurar y se puede saltar o reabrir con **Activar tutorial**.
+3. Abre **Organizar → Dinero → Automatización**. El tutorial destaca qué configurar y se puede saltar o reabrir con **Activar tutorial**.
 4. Selecciona todas las apps cuyos avisos quieras leer, concede a Bolsillo acceso a notificaciones y activa la detección. Las tarjetas físicas y digitales pueden compartir la misma cuenta.
 5. En **Ajustes → Avisos de Bolsillo**, concede el permiso para recibir sus confirmaciones. Es independiente del permiso para leer avisos. Puedes enviar una notificación de prueba.
 
 El catálogo incluye BancoEstado, MACHBANK, Banco de Chile, Santander, Bci, Scotiabank, Itaú, Banco Falabella, BICE, Consorcio, Internacional, Security, Ripley, Tenpo, Coopeuch y Mercado Pago. También puedes crear una cuenta personalizada. Las imágenes se incluyen localmente y solo identifican cada institución; Bolsillo no está afiliado a ellas.
 
+En **Ajustes → Apariencia → Tus colores** puedes elegir el acento y los reflejos de la app. Se conservan las paletas Prisma, Océano y Ámbar, los modos claro, oscuro y sistema y los niveles de profundidad. Las tarjetas y servicios calculan sus propios degradados desde las imágenes de sus marcas y se adaptan al modo de luz.
+
 ## Compartir sin inflar tus gastos
+
+En **Organizar → Planear → Suscripciones** encontrarás un catálogo de 60 servicios de vídeo, música, inteligencia artificial, juegos y otras categorías. Elige un servicio y configura tu plan, importe, fecha y cuenta; las plantillas no generan cobros por sí solas.
 
 Si pagas Netflix por $9.990 y otra persona aporta $5.000, el gasto personal del mes es **$4.990**. La cuenta conserva el cargo completo de $9.990 y el cobro se registra aparte, con fecha y nota. Recibir un abono no vuelve a sumar un ingreso por la misma deuda. Si un pago llegó como ingreso normal, puedes vincularlo al cobro desde su movimiento.
 

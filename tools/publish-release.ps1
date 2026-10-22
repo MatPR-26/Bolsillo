@@ -21,7 +21,7 @@ $taskIdentity=Get-Content -LiteralPath $BuildInfo -Raw | ConvertFrom-Json
 $taskHash=(Get-FileHash -LiteralPath $Apk -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($taskIdentity.apkSha256 -ne $taskHash -or $taskIdentity.versionCode -ne $taskCode) { throw 'El APK no coincide con la compilación actual' }
 foreach($taskSource in $taskIdentity.productionFiles) {
- if ($taskSource.file -notmatch '^source/android/(src/|res/|AndroidManifest\.xml$)' -or $taskSource.file -match '(^|/)\.\.(/|$)') { throw 'Ruta inesperada en la identidad' }
+ if ($taskSource.file -notmatch '^source/android/(src/|res/|licenses/|AndroidManifest\.xml$)' -or $taskSource.file -match '(^|/)\.\.(/|$)') { throw 'Ruta inesperada en la identidad' }
  if ((Get-FileHash -LiteralPath (Join-Path $taskRoot $taskSource.file) -Algorithm SHA256).Hash.ToLowerInvariant() -ne $taskSource.sha256) { throw "Código cambiado desde la compilación: $($taskSource.file)" }
 }
 $taskBt=Join-Path $Sdk 'build-tools/android-16'

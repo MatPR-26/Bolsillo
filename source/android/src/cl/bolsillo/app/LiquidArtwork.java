@@ -1,11 +1,14 @@
 package cl.bolsillo.app;
-import android.content.Context;import android.graphics.*;import android.graphics.drawable.*;
-/** A quiet optical pane. Artwork belongs to the page, never repeated on every card. */
+import android.content.Context;import android.graphics.*;import android.graphics.drawable.Drawable;
+/** Hero and bank panes share one optical surface rather than nested ornamental frames. */
 final class LiquidArtwork extends Drawable {
- final Paint p=new Paint(3);final RectF box=new RectF(),rim=new RectF(),inset=new RectF();final Path clip=new Path(),facet=new Path(),edgeLight=new Path();final boolean dark;final int tint,accent;final float radius;final int intensity;Shader base,reflection,edge,facetLight,topReflection;int alpha=255;
- LiquidArtwork(Context c,int tint,int radius){dark=Glass.dark(c);this.tint=tint;accent=Glass.primary(c);this.radius=Glass.dp(c,radius);intensity=Glass.intensity(c);}
- protected void onBoundsChange(Rect r){box.set(r);rim.set(box);rim.inset(.8f,.8f);inset.set(box);inset.inset(2.2f,2.2f);clip.reset();clip.addRoundRect(box,radius,radius,Path.Direction.CW);float w=Math.max(1,r.width()),h=Math.max(1,r.height());int ground=dark?0xff172037:0xfff1f3fc;base=new LinearGradient(r.left,r.top,r.right,r.bottom,new int[]{Glass.alpha(Glass.mix(ground,tint,dark?.23f:.17f),dark?227:225),Glass.alpha(Glass.mix(ground,tint,dark?.09f:.06f),dark?241:239)},null,Shader.TileMode.CLAMP);reflection=new LinearGradient(r.left,r.top,r.left+w*.75f,r.bottom,new int[]{dark?0x29ffffff:0xafffffff,dark?0x03ffffff:0x20ffffff,0x00ffffff},new float[]{0,.48f,1},Shader.TileMode.CLAMP);edge=new LinearGradient(r.left,r.top,r.right,r.bottom,new int[]{dark?0xa0ffffff:0xffffffff,Glass.alpha(tint,dark?95:110),dark?0x17ffffff:0x8cffffff,Glass.alpha(accent,145)},new float[]{0,.28f,.73f,1},Shader.TileMode.CLAMP);facetLight=new LinearGradient(r.left+w*.57f,r.top,r.right,r.bottom,new int[]{0x00ffffff,dark?0x05ffffff:0x25ffffff,Glass.alpha(tint,dark?27:28)},new float[]{0,.7f,1},Shader.TileMode.CLAMP);facet.reset();facet.moveTo(r.left+w*.64f,r.top);facet.lineTo(r.right,r.top);facet.lineTo(r.right,r.bottom);facet.lineTo(r.left+w*.37f,r.bottom);facet.close();topReflection=new LinearGradient(r.left+radius,r.top,r.left+w*.66f,r.top,new int[]{Glass.alpha(Color.WHITE,dark?100:190),0x00ffffff},null,Shader.TileMode.CLAMP);edgeLight.reset();edgeLight.moveTo(r.left+radius,r.top+2.5f);edgeLight.lineTo(r.left+w*.66f,r.top+2.5f);}
- public void draw(Canvas c){if(alpha==0)return;p.setStrokeCap(Paint.Cap.BUTT);int saved=c.save();c.clipPath(clip);p.setAlpha(alpha);p.setStyle(Paint.Style.FILL);p.setShader(base);c.drawRect(box,p);if(intensity>0){p.setShader(reflection);c.drawRect(box,p);p.setShader(facetLight);c.drawPath(facet,p);}c.restoreToCount(saved);p.setShader(edge);p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(1.5f);c.drawRoundRect(rim,radius,radius,p);if(intensity>0){p.setShader(null);p.setColor(Glass.alpha(Color.WHITE,(dark?11:48)*alpha/255));p.setStrokeWidth(.8f);c.drawRoundRect(inset,Math.max(1,radius-2),Math.max(1,radius-2),p);p.setShader(topReflection);p.setAlpha(alpha);p.setStrokeCap(Paint.Cap.ROUND);p.setStrokeWidth(1);c.drawPath(edgeLight,p);}p.setShader(null);p.setStyle(Paint.Style.FILL);}
- public void getOutline(Outline o){o.setRoundRect(getBounds(),radius);o.setAlpha(((dark?227:225)/255f)*(alpha/255f));}
- public void setAlpha(int a){alpha=Math.max(0,Math.min(255,a));invalidateSelf();}public int getAlpha(){return alpha;}public void setColorFilter(ColorFilter f){p.setColorFilter(f);invalidateSelf();}public int getOpacity(){return PixelFormat.TRANSLUCENT;}
+ final float radius;final GlassMaterial material;
+ LiquidArtwork(Context c,int tint,int radius){this.radius=Glass.dp(c,radius);material=new GlassMaterial(c,219,radius,tint);}
+ @Override protected void onBoundsChange(Rect bounds){material.setBounds(bounds);}
+ @Override public void draw(Canvas canvas){material.draw(canvas);}
+ @Override public void getOutline(Outline outline){material.getOutline(outline);}
+ @Override public void setAlpha(int alpha){material.setAlpha(alpha);invalidateSelf();}
+ @Override public int getAlpha(){return material.getAlpha();}
+ @Override public void setColorFilter(ColorFilter filter){material.setColorFilter(filter);invalidateSelf();}
+ @Override public int getOpacity(){return PixelFormat.TRANSLUCENT;}
 }

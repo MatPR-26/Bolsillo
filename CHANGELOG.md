@@ -1,5 +1,23 @@
 # Cambios
 
+## 17.0 · Cristal y claridad
+
+- Interfaz renovada con tipografía Inter, bordes de luz sutiles y menús más legibles.
+- Inicio con tarjetas deslizables para consultar el dinero disponible, para gastar y con ahorro.
+- Gráficos interactivos con sectores separados, importes, porcentajes y acceso a sus movimientos.
+- Cuentas con tarjetas amplias de cristal, reflejos suaves y fondo con profundidad; vistas de disponibles, ahorro y crédito.
+- Las tarjetas físicas y digitales conservan su saldo compartido y sus opciones de gestión.
+- Colores y degradados calculados desde los logotipos, también en servicios y tarjetas del inicio.
+- Ondas suaves al tocar y perspectiva discreta en las tarjetas, con gestos que ceden al desplazamiento.
+- Paleta personal para elegir acento y reflejos; modos claro, oscuro y sistema con contraste adaptado.
+- Detalle de movimientos con reparto, cobros pendientes e historial de cambios.
+- Revisión con acciones de aprobación y descarte siempre accesibles durante la selección.
+- Perfiles de personas más compactos y acceso directo al registro de préstamos y deudas anteriores.
+- Catálogo de 60 suscripciones con imágenes, búsqueda y configuración del importe de cada plan.
+- Configuración de detección con explicación del acceso y estado real de permiso, captura y aplicaciones elegidas.
+
+Conserva tus cuentas, movimientos, configuraciones, deudas y abonos. Instala la actualización sobre la versión anterior sin desinstalarla.
+
 ## 16.0 · Navegación y menús
 
 - Menos pausas al abrir pantallas y cambiar de sección.

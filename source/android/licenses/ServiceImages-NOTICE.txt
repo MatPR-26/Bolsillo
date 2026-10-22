@@ -1,0 +1,17 @@
+Subscription service images
+
+The local catalogue contains service names and images for identification only.
+Bolsillo is not affiliated with or endorsed by those providers. Choosing a
+template does not purchase a subscription or connect an external account.
+
+ServiceImages-sources.json records the source, version, rights metadata and
+SHA-256 hash for each bundled image. Vector assets sourced through Simple Icons
+retain their geometry and brand colours. SVG numeric separators are normalized
+for Android VectorDrawable using svgpath 2.6.0 (MIT); parsing the result must
+produce exactly the same path segments. The library's CC0 licence does
+not waive trademarks or individual brand guidelines; see the bundled Simple
+Icons licence and disclaimer. Publisher favicons retain their owners' rights.
+
+Images are packaged with the app. Browsing the catalogue does not contact the
+providers or download images. Prices, billing dates and account assignments
+are entered by the user; no current service prices are bundled.

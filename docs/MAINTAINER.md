@@ -28,6 +28,8 @@ Remove-Item Env:BOLSILLO_STORE_PASSWORD
 
 La salida es `dist/Bolsillo-<versionCode>.apk`. El paquete `cl.bolsillo.app.local` se conserva para actualizar las instalaciones anteriores. La firma pública de la distribución oficial es SHA-256 `55328fdbbbb057047b1ce35dc1541c9bac300f4233bce90bb3121478faafe526`.
 
+En Windows, `tools/build-signed.ps1` también admite una credencial local protegida mediante DPAPI para el usuario actual, fuera del repositorio, en `.signing/signing-credential.dpapi`. No se distribuye esa credencial ni la clave. El helper restaura las variables del proceso al terminar. Las licencias de los recursos se incluyen dentro del APK en `assets/licenses/`.
+
 ## Verificación automática
 
 GitHub Actions compila los recursos y el código sin firma y ejecuta las pruebas JVM en cada cambio. No usa ni necesita la clave privada. La revisión de interfaz y del instalador se hace en un emulador local dedicado.
@@ -40,10 +42,10 @@ La fase de instalación de actualizaciones requiere APK de prueba de versión su
 
 ## Publicar la próxima versión
 
-1. Modifica el código y aumenta `android:versionCode` en `source/android/AndroidManifest.xml` (por ejemplo 16), además del nombre de versión. El código debe aumentar en cada APK publicado.
+1. Modifica el código y aumenta `android:versionCode` en `source/android/AndroidManifest.xml` (por ejemplo 17), además del nombre de versión. El código debe aumentar en cada APK publicado.
 2. Compila con la clave original, ejecuta pruebas y revisa interfaz y conservación de registros.
 3. Sube el código revisado, sin claves, archivos de entorno, respaldos, datos del emulador ni adjuntos personales.
-4. Publica una release estable, por ejemplo `v16.0`, cuyo asset se llame **exactamente** `Bolsillo-16.apk`. Usa el script `tools/publish-release.ps1` o GitHub CLI. Los borradores y versiones preliminares no aparecen en la app.
+4. Publica una release estable, por ejemplo `v17.0`, cuyo asset se llame **exactamente** `Bolsillo-17.apk`. Usa el script `tools/publish-release.ps1` o GitHub CLI. Los borradores y versiones preliminares no aparecen en la app.
 
 El script prepara la release en borrador. Usa `-Publish` solo cuando quieras publicarla. Necesitas GitHub CLI autenticado en el almacén del sistema, sin un token en el código. El script comprueba el APK, su versión y la firma, y publica también `SHA256SUMS.txt`. La app utiliza el digest SHA-256 calculado por GitHub, y vuelve a validar paquete/versión/firma antes de instalar.
 

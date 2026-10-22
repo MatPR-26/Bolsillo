@@ -21,7 +21,7 @@ final class CategoryShortcut {
   shortcut.setPadding(0,a.dp(4),a.dp(3),a.dp(4));
   TextView label=Modern.text(a,full,12,QuickCategory.needsCategory(a.data,tx)?Glass.accent(a):Glass.ink(a),true);
   label.setSingleLine(true);label.setEllipsize(android.text.TextUtils.TruncateAt.END);
-  Drawable arrow=new Icons.Line(a,"chevron",Glass.subtle(a));arrow.setBounds(0,0,a.dp(14),a.dp(14));
+  Drawable arrow=new Icons.Line(a,"edit",Glass.subtle(a));arrow.setBounds(0,0,a.dp(14),a.dp(14));
   label.setCompoundDrawablePadding(a.dp(4));label.setCompoundDrawablesRelative(null,null,arrow,null);
   texts.removeView(metadata);metadata.setText(detail);metadata.setMaxLines(2);
   label.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);metadata.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);

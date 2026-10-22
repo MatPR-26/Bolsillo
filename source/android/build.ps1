@@ -40,7 +40,14 @@ Run (Join-Path $Jdk 'bin/jar.exe') @('cf',"$Out/classes.jar",'-C',"$Out/producti
 Run $java @('-cp',"$bt/lib/d8.jar",'com.android.tools.r8.D8','--lib',$platform,'--min-api','26','--output',"$Out/dex","$Out/classes.jar")
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zip = [IO.Compression.ZipFile]::Open("$Out/base.apk",[IO.Compression.ZipArchiveMode]::Update)
-try { Get-ChildItem "$Out/dex" -Filter '*.dex' | ForEach-Object { [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip,$_.FullName,$_.Name) | Out-Null } } finally { $zip.Dispose() }
+try {
+ Get-ChildItem "$Out/dex" -Filter '*.dex' | ForEach-Object { [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip,$_.FullName,$_.Name) | Out-Null }
+ $taskLicenses=Join-Path $PSScriptRoot 'licenses'
+ Get-ChildItem -LiteralPath $taskLicenses -File -Recurse | ForEach-Object {
+  $taskEntry='assets/licenses/'+$_.FullName.Substring($taskLicenses.Length+1).Replace('\','/')
+  [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip,$_.FullName,$taskEntry) | Out-Null
+ }
+} finally { $zip.Dispose() }
 Run "$bt/zipalign.exe" @('-f','4',"$Out/base.apk","$Out/aligned.apk")
 if ($Unsigned) { Copy-Item -LiteralPath "$Out/aligned.apk" -Destination "$Out/Bolsillo-$taskVersion-unsigned.apk" -Force; Write-Output 'Compilación sin firma; solo para validar código.'; return }
 Run $java @('-jar',"$bt/lib/apksigner.jar",'sign','--ks',$Key,'--ks-pass','env:BOLSILLO_STORE_PASSWORD','--key-pass','env:BOLSILLO_KEY_PASSWORD','--out',"$Out/$taskApkName","$Out/aligned.apk")
@@ -51,7 +58,7 @@ Get-FileHash "$Out/$taskApkName" -Algorithm SHA256
 
 
 $taskRoot=[IO.Path]::GetFullPath("$PSScriptRoot/../..")
-$taskProduction=@(Get-Item -LiteralPath "$PSScriptRoot/AndroidManifest.xml") + @(Get-ChildItem -LiteralPath "$PSScriptRoot/src","$PSScriptRoot/res" -File -Recurse)
+$taskProduction=@(Get-Item -LiteralPath "$PSScriptRoot/AndroidManifest.xml") + @(Get-ChildItem -LiteralPath "$PSScriptRoot/src","$PSScriptRoot/res","$PSScriptRoot/licenses" -File -Recurse)
 $taskFiles=@($taskProduction | Sort-Object FullName | ForEach-Object {
  [ordered]@{file=$_.FullName.Substring($taskRoot.Length+1).Replace('\','/');sha256=(Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()}
 })

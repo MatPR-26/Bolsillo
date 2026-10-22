@@ -1,0 +1,10 @@
+{
+  "family": "Inter Variable",
+  "version": "4.1",
+  "source": "https://github.com/rsms/inter/releases/tag/v4.1",
+  "archive": "https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip",
+  "member": "InterVariable.ttf",
+  "sha256": "4989b125924991b90d05b2d16e0e388c48f7d5bb8b30539bbf9c755278d0ccaf",
+  "license": "SIL Open Font License 1.1",
+  "runtimeNetworkRequests": false
+}
